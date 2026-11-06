@@ -1,5 +1,7 @@
 /** Fixture data for the development-only UI preview at /dev/preview. */
 import type { Evaluation, ExerciseContent } from "@/lib/ai/schemas";
+import type { LessonBrief, LessonPlan } from "@/lib/ai/lesson-schemas";
+import type { WorkspaceMessage } from "@/components/lessons/lesson-workspace";
 
 export const fixtureExercises: { id: string; title: string; skill: string; content: ExerciseContent }[] = [
   {
@@ -165,4 +167,54 @@ export const fixtureEvaluation: Evaluation = {
     model_version: "Draw a line. Put 'now' at the end. 'I went to Rome in 2019' — point to 2019: we know WHEN. 'I have been to Rome' — wave over the whole line: some time in my life, we don't say when. CCQ: 'I have been to Rome.' Do we know when? (No.) Is it important? (No.)",
   },
   next_step: "Rewrite the CCQ so it checks 'do we know when?', then try the same explanation for a B2 adult.",
+};
+
+const fixtureBrief: LessonBrief = {
+  class_name: "Tuesday teens B1",
+  student_ages: "13–14",
+  level: "B1",
+  class_size: 18,
+  duration_minutes: 50,
+  aim: "Students can describe past experiences with the present perfect and ask follow-up questions in the past simple; they keep confusing the two.",
+  language_focus: "Present perfect (experience) vs past simple",
+  previous_lesson: "We did 'ever/never' with a listening; the quiz showed they can form the present perfect but overuse it for finished-time events.",
+  materials_available: "Projector, whiteboard, coursebook unit 4, phones allowed",
+  constraints: "Quiet group; two students at A2",
+  teacher_ideas: "A 'Find someone who has…' mingle, then pairs interview each other and switch to past simple for details.",
+};
+
+const fixturePlan: LessonPlan = {
+  title: "Have you ever…? From experiences to details",
+  objectives: [
+    "Ask and answer 'Have you ever…?' questions about experiences",
+    "Switch to the past simple to give details (when, where, who with)",
+  ],
+  target_language: "Have you ever + past participle? / Yes, I have. – When did you…? / I went… last year.",
+  assumed_knowledge: "Past participles of common verbs; 'ever/never' from last lesson.",
+  stages: [
+    { id: "s1", name: "Lead-in: teacher's experiences", minutes: 6, aim: "Set the context and notice the switch", procedure: "T shows three photos and says: 'I have been to Chile. I went in 2019 with my sister.' Ss guess which two are true. Elicit: which sentence says WHEN?", interaction: "T–Ss", materials: "3 photos on projector", checks: "CCQ: 'I have been to Chile' – do we know when? (No.) 'I went in 2019' – do we know when? (Yes.)" },
+    { id: "s2", name: "Find someone who has…", minutes: 12, aim: "Fluency with the target question", procedure: "Ss mingle with a 10-item grid ('…has eaten sushi', '…has lost a phone'). They must find a different name for each line.", interaction: "mingle", materials: "Handout", checks: "ICQ: do you write one name per line or many? Monitor for 'Did you ever…' and feed back on the board." },
+    { id: "s3", name: "Noticing: question switch", minutes: 7, aim: "Guided discovery of experience vs detail", procedure: "Board two dialogues; Ss underline which question asks for details. Elicit the rule in their own words.", interaction: "pairs → T–Ss", materials: "Whiteboard", checks: "Ss complete the rule: 'Have you ever…?' = ___ ; 'When did you…?' = ___" },
+    { id: "s4", name: "Interview and report", minutes: 20, aim: "Controlled-to-freer practice", procedure: "Pairs interview with the grid: first the experience question, then at least two detail questions. Then each student reports one interesting thing about their partner to a new partner.", interaction: "pairs → new pairs", materials: "Grid from stage 2", checks: "Monitor for tense switch; collect 4 sentences for delayed correction." },
+    { id: "s5", name: "Delayed correction and exit ticket", minutes: 5, aim: "Consolidate", procedure: "Correct the collected sentences together. Exit ticket: one 'Have you ever' question + one 'When' question.", interaction: "T–Ss, individual", materials: "Exit slips", checks: "Exit tickets show the two question types." },
+  ],
+  materials_list: ["3 photos", "'Find someone who…' handout (10 lines)", "Exit slips"],
+  anticipated_problems: [
+    { problem: "Ss use 'Did you ever…?' in the mingle", solution: "Model the question twice; put it on the board; delayed correction." },
+    { problem: "A2 students struggle with participles", solution: "Give them a participle list on the handout; pair them with stronger partners." },
+  ],
+  differentiation: "Fast finishers write three follow-up questions for each line.",
+  assessment: "Monitoring during stage 4 and exit tickets.",
+  homework: "Write 5 sentences about experiences + 5 with details (coursebook p. 42).",
+};
+
+export const fixtureLesson = {
+  lesson: { id: "preview", title: fixturePlan.title, status: "drafting" as const, reflection: null, taught_on: null },
+  brief: fixtureBrief,
+  plan: { ...fixturePlan, stages: fixturePlan.stages.slice(0, 2), anticipated_problems: [], differentiation: "", assessment: "", homework: null },
+  messages: [
+    { id: "m1", role: "assistant", content: "Thanks — this is a clear brief, and the mingle-then-interview idea already does most of the work. Two things I need before proposing anything:", questions: ["How confident are the two A2 students with past participles — would a list on the handout be enough?", "Do you want the 'switch to past simple' to be discovered by the students or presented by you?"], proposal: null, proposal_status: null },
+    { id: "m2", role: "user", content: "A list is enough. I'd like them to discover it — I've had good results with boardwork and underlining.", questions: [], proposal: null, proposal_status: null },
+    { id: "m3", role: "assistant", content: "Then here is a full 50-minute outline built around your mingle. I kept your two stages, added a short lead-in using your own travel examples so the contrast is visible before the mingle, a noticing stage with boardwork, and a report stage so the switch gets real use.", questions: [], proposal: { summary: "Adds a lead-in, a guided-discovery stage and a report stage around your mingle; total 50 min.", plan: fixturePlan }, proposal_status: "pending" },
+  ] satisfies WorkspaceMessage[],
 };

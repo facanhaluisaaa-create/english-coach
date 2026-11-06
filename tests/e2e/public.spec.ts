@@ -35,7 +35,7 @@ test.describe("public pages", () => {
 });
 
 test.describe("route protection", () => {
-  for (const path of ["/today", "/progress", "/memory", "/toefl", "/teaching", "/coach", "/settings", "/session/abc"]) {
+  for (const path of ["/today", "/progress", "/memory", "/toefl", "/teaching", "/lessons", "/lessons/new", "/coach", "/settings", "/session/abc"]) {
     test(`redirects ${path} to login with a return URL`, async ({ page }) => {
       await page.goto(path);
       await expect(page).toHaveURL(new RegExp(`/login\\?next=${encodeURIComponent(path).replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`));

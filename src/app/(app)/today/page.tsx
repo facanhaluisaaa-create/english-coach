@@ -7,7 +7,7 @@ import { getTodaySession } from "@/lib/learning/session-service";
 import { localDateString } from "@/lib/learning/dates";
 import { isAiConfigured } from "@/lib/ai/client";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { LinkButton } from "@/components/ui/link-button";
 import { StartSessionButton } from "@/components/session/start-session-button";
 import { SessionPlan, SessionSummary } from "@/lib/ai/schemas";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
@@ -124,11 +124,11 @@ export default async function TodayPage() {
                 </div>
               ) : null}
               <div className="flex flex-wrap gap-2">
-                <Button nativeButton={false} render={<Link href={`/session/${session.id}`} />}>
+                <LinkButton href={`/session/${session.id}`}>
                   {session.status === "completed" ? "Review session" : done === 0 ? "Start" : "Continue"} <ArrowRightIcon />
-                </Button>
+                </LinkButton>
                 {session.status === "completed" && (
-                  <Button variant="outline" nativeButton={false} render={<Link href="/toefl" />}>Extra TOEFL practice</Button>
+                  <LinkButton variant="outline" href="/toefl">Extra TOEFL practice</LinkButton>
                 )}
               </div>
             </div>

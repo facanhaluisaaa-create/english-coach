@@ -1,6 +1,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 import { isSupabaseConfigured } from "@/lib/env";
+import { hasSupabaseSessionCookie } from "./cookies";
 
 const PUBLIC_PATHS = ["/", "/login", "/signup", "/auth", "/setup", ...(process.env.NODE_ENV === "production" ? [] : ["/dev"])];
 const AUTH_ONLY_REDIRECT = ["/login", "/signup"];
@@ -42,12 +43,15 @@ export async function updateSession(request: NextRequest) {
   );
 
   // IMPORTANT: do not run code between createServerClient and getUser().
+  // Anonymous visitors (no auth cookie) skip the network round-trip entirely.
   let user: { id: string } | null = null;
-  try {
-    const { data } = await supabase.auth.getUser();
-    user = data.user;
-  } catch {
-    user = null;
+  if (hasSupabaseSessionCookie(request.cookies.getAll())) {
+    try {
+      const { data } = await supabase.auth.getUser();
+      user = data.user;
+    } catch {
+      user = null;
+    }
   }
 
   if (!user && pathname.startsWith("/api/")) {

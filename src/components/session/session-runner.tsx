@@ -1,11 +1,11 @@
 "use client";
 
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMemo, useState, useTransition } from "react";
 import { ArrowRightIcon, CheckIcon, FlameIcon, Loader2Icon, SkipForwardIcon } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import { LinkButton } from "@/components/ui/link-button";
 import { Badge } from "@/components/ui/badge";
 import { ExerciseSwitch } from "@/components/exercises/exercise-switch";
 import { EvaluationCard } from "./evaluation-card";
@@ -268,9 +268,9 @@ function SummaryView({
         </ul>
       </div>
       <div className="flex flex-wrap gap-2">
-        <Button nativeButton={false} render={<Link href="/today" />}>Back to Today</Button>
-        <Button variant="outline" nativeButton={false} render={<Link href="/progress" />}>See progress</Button>
-        <Button variant="outline" nativeButton={false} render={<Link href="/toefl" />}>Extra TOEFL practice</Button>
+        <LinkButton href="/today">Back to Today</LinkButton>
+        <LinkButton variant="outline" href="/progress">See progress</LinkButton>
+        <LinkButton variant="outline" href="/toefl">Extra TOEFL practice</LinkButton>
       </div>
     </div>
   );

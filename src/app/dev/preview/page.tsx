@@ -1,7 +1,8 @@
 import { notFound } from "next/navigation";
 import { SessionRunner } from "@/components/session/session-runner";
 import { EvaluationCard } from "@/components/session/evaluation-card";
-import { fixtureEvaluation, fixtureExercises } from "@/lib/dev/fixtures";
+import { fixtureEvaluation, fixtureExercises, fixtureLesson } from "@/lib/dev/fixtures";
+import { LessonWorkspace } from "@/components/lessons/lesson-workspace";
 
 /**
  * Development-only preview of the session runner with fixture content.
@@ -17,6 +18,14 @@ export default async function PreviewPage(props: PageProps<"/dev/preview">) {
     return (
       <main className="mx-auto max-w-3xl px-4 py-8">
         <EvaluationCard evaluation={fixtureEvaluation} />
+      </main>
+    );
+  }
+
+  if (view === "lesson") {
+    return (
+      <main className="mx-auto max-w-6xl px-4 py-8">
+        <LessonWorkspace lesson={fixtureLesson.lesson} brief={fixtureLesson.brief} plan={fixtureLesson.plan} messages={fixtureLesson.messages} />
       </main>
     );
   }

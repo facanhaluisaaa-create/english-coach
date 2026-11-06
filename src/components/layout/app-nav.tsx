@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BrainIcon, CalendarCheckIcon, GraduationCapIcon, LineChartIcon, MessageCircleIcon, TargetIcon } from "lucide-react";
+import { BrainIcon, CalendarCheckIcon, GraduationCapIcon, LineChartIcon, MessageCircleIcon, NotebookPenIcon, TargetIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const items = [
@@ -11,6 +11,7 @@ const items = [
   { href: "/memory", label: "Memory", icon: BrainIcon },
   { href: "/toefl", label: "TOEFL", icon: TargetIcon },
   { href: "/teaching", label: "Teaching", icon: GraduationCapIcon },
+  { href: "/lessons", label: "Classes", icon: NotebookPenIcon },
   { href: "/coach", label: "Coach", icon: MessageCircleIcon },
 ] as const;
 
@@ -41,7 +42,7 @@ export function MobileNav() {
   const pathname = usePathname();
   return (
     <nav className="fixed inset-x-0 bottom-0 z-40 border-t bg-background/95 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden">
-      <ul className="grid grid-cols-6">
+      <ul className="grid grid-cols-7">
         {items.map((item) => {
           const active = pathname === item.href || pathname.startsWith(item.href + "/");
           return (
@@ -49,7 +50,7 @@ export function MobileNav() {
               <Link
                 href={item.href}
                 className={cn(
-                  "flex flex-col items-center gap-1 py-2 text-[11px] font-medium",
+                  "flex flex-col items-center gap-1 py-2 text-[10px] font-medium",
                   active ? "text-primary" : "text-muted-foreground",
                 )}
               >

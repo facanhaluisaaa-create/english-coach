@@ -157,6 +157,31 @@ export type CoachMessageRow = {
   created_at: string;
 }
 
+export type LessonPlanRow = {
+  id: string;
+  user_id: string;
+  title: string;
+  status: "drafting" | "ready" | "taught" | "archived";
+  brief: Json;
+  plan: Json | null;
+  reflection: string | null;
+  taught_on: string | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export type LessonMessageRow = {
+  id: string;
+  lesson_id: string;
+  user_id: string;
+  role: "user" | "assistant";
+  content: string;
+  questions: Json | null;
+  proposal: Json | null;
+  proposal_status: "pending" | "applied" | "discarded" | null;
+  created_at: string;
+};
+
 /** Generic table shape used by supabase-js generics. */
 type Table<Row extends Record<string, unknown>, Required extends keyof Row = never> = {
   Row: Row;
@@ -180,6 +205,8 @@ export type Database = {
       review_log: Table<ReviewLogRow, "user_id" | "item_type" | "item_id" | "rating" | "correct">;
       skill_scores: Table<SkillScoreRow, "user_id" | "skill" | "score">;
       coach_messages: Table<CoachMessageRow, "user_id" | "role" | "content">;
+      lesson_plans: Table<LessonPlanRow, "user_id" | "title" | "brief">;
+      lesson_messages: Table<LessonMessageRow, "lesson_id" | "user_id" | "role" | "content">;
     };
     Views: Record<string, never>;
     Functions: Record<string, never>;

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { requireProfile } from "@/lib/auth/session";
 import { createClient } from "@/lib/supabase/server";
 import { TeachingLauncher } from "@/components/teaching/teaching-launcher";
@@ -50,6 +51,9 @@ export default async function TeachingPage() {
         <p className="mt-1 text-sm text-muted-foreground">
           Simulate a student, explain, correct or plan — and get mentored on accuracy, clarity, age-appropriateness and pedagogy.
           {profile.teaching_contexts ? ` Your contexts: ${profile.teaching_contexts}.` : ""}
+        </p>
+        <p className="mt-2 text-sm">
+          Planning a real class? Use <Link href="/lessons" className="font-medium underline underline-offset-4">Classes</Link> to build the plan together with the coach.
         </p>
       </div>
 

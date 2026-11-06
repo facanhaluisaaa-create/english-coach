@@ -1,6 +1,5 @@
-import Link from "next/link";
 import { ArrowRightIcon, BookOpenTextIcon, BrainIcon, GraduationCapIcon, SparklesIcon, TargetIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { LinkButton } from "@/components/ui/link-button";
 import { getUser } from "@/lib/auth/session";
 import { isSupabaseConfigured } from "@/lib/env";
 import { redirect } from "next/navigation";
@@ -42,8 +41,8 @@ export default async function LandingPage() {
           English Mastery
         </div>
         <nav className="flex items-center gap-2">
-          <Button variant="ghost" nativeButton={false} render={<Link href="/login" />}>Sign in</Button>
-          <Button nativeButton={false} render={<Link href="/signup" />}>Get started</Button>
+          <LinkButton variant="ghost" href="/login">Sign in</LinkButton>
+          <LinkButton href="/signup">Get started</LinkButton>
         </nav>
       </header>
 
@@ -59,8 +58,8 @@ export default async function LandingPage() {
           challenge — all remembered, reviewed, and tuned to your recurring weaknesses.
         </p>
         <div className="mt-8 flex flex-wrap gap-3">
-          <Button size="lg" nativeButton={false} render={<Link href="/signup" />}>Start today&apos;s session <ArrowRightIcon /></Button>
-          <Button size="lg" variant="outline" nativeButton={false} render={<Link href="/login" />}>I already have an account</Button>
+          <LinkButton size="lg" href="/signup">Start today&apos;s session <ArrowRightIcon /></LinkButton>
+          <LinkButton size="lg" variant="outline" href="/login">I already have an account</LinkButton>
         </div>
       </section>
 

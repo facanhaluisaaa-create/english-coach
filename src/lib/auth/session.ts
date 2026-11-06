@@ -1,11 +1,15 @@
 import "server-only";
 import { redirect } from "next/navigation";
 import { cache } from "react";
+import { cookies } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
+import { hasSupabaseSessionCookie } from "@/lib/supabase/cookies";
 import type { ProfileRow } from "@/lib/db/types";
 
 /** Data Access Layer: the single place that reads the current user. */
 export const getUser = cache(async () => {
+  const cookieStore = await cookies();
+  if (!hasSupabaseSessionCookie(cookieStore.getAll())) return null;
   const supabase = await createClient();
   const { data } = await supabase.auth.getUser();
   return data.user ?? null;
